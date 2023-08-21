@@ -2,7 +2,9 @@ import json
 import os
 from contextlib import contextmanager
 from threading import Event, Thread
-from typing import TYPE_CHECKING, Iterator
+from typing import TYPE_CHECKING, Iterator, Mapping
+
+from dagster_externals import DAGSTER_EXTERNALS_ENV_KEYS, encode_param
 
 from dagster._core.external_execution.resource import (
     ExternalExecutionContextInjector,
