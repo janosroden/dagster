@@ -1,6 +1,10 @@
 import hashlib
 import json
 import os
+import sys
+
+from dagster_externals import ExternalExecutionMessageWriter
+from dagster_externals._protocol import ExternalExecutionMessage
 
 
 def load_asset_value(asset_key: str, storage_path: str):
@@ -16,3 +20,8 @@ def store_asset_value(asset_key: str, storage_path: str, value: int):
 
 def compute_data_version(value: int):
     return hashlib.sha256(str(value).encode("utf-8")).hexdigest()
+
+
+class StdoutMessageSink(ExternalExecutionMessageWriter):
+    def send_message(self, message: ExternalExecutionMessage) -> None:
+        sys.stdout.writelines((json.dumps(message), "\n"))

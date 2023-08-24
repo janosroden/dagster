@@ -23,7 +23,7 @@ class ExternalExecutionFileContextLoader(ExternalExecutionContextLoader):
             return context_injector_params["path"]
         except AssertionError:
             raise DagsterExternalsError(
-                f"`{self.__class__.__name__}` requires a `path` key in the"
+                f"`{self.__class__.__name__}` requires the"
                 f" {DAGSTER_EXTERNALS_ENV_KEYS['context_injector']} environment variable be a JSON"
                 " object with a string `path` property."
             )
@@ -51,7 +51,7 @@ class ExternalExecutionFileMessageWriter(ExternalExecutionMessageWriter):
             return context_injector_params["path"]
         except AssertionError:
             raise DagsterExternalsError(
-                f"`{self.__class__.__name__}` requires a `path` key in the"
+                f"`{self.__class__.__name__}` requires the"
                 f" {DAGSTER_EXTERNALS_ENV_KEYS['message_reader']} environment variable be a JSON"
                 " object with a string `path` property."
             )

@@ -2,9 +2,11 @@ import os
 
 from dagster_externals import init_dagster_externals
 
-from .util import compute_data_version, store_asset_value
+from .util import StdoutMessageSink, compute_data_version, store_asset_value
 
-context = init_dagster_externals()
+context = init_dagster_externals(
+    message_sink=StdoutMessageSink() if os.getenv("STDOUT_MSG_SINK") else None
+)
 storage_root = context.get_extra("storage_root")
 
 value = int(os.environ["NUMBER_Y"])
