@@ -17,7 +17,6 @@ from typing import (
 )
 
 import dagster._check as check
-from dagster._annotations import experimental
 from dagster._core.definitions.data_time import CachingDataTimeResolver
 from dagster._core.definitions.events import AssetKey, AssetKeyPartitionKey
 from dagster._core.definitions.freshness_based_auto_materialize import (
@@ -33,10 +32,11 @@ from dagster._serdes.serdes import (
     whitelist_for_serdes,
 )
 from dagster._utils.caching_instance_queryer import CachingInstanceQueryer
-from dagster._utils.warnings import disable_dagster_warnings
 
 from .asset_graph import AssetGraph, sort_key_for_asset_partition
 from .partition import SerializedPartitionsSubset
+from dagster._annotations import experimental
+from dagster._utils.warnings import disable_dagster_warnings
 
 if TYPE_CHECKING:
     from dagster._core.definitions.asset_daemon_context import AssetDaemonContext
@@ -593,7 +593,6 @@ class SkipOnNotAllParentsUpdatedRule(
         return []
 
 
-@experimental
 @whitelist_for_serdes
 class DiscardOnMaxMaterializationsExceededRule(
     AutoMaterializeRule, NamedTuple("_DiscardOnMaxMaterializationsExceededRule", [("limit", int)])
