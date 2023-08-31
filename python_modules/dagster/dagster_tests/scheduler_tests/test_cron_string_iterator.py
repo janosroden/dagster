@@ -19,6 +19,24 @@ def test_cron_iterator_always_advances():
     assert next_datetime.timestamp() > start_timestamp
 
 
+def test_cron_iterator_leap_day():
+    tz = "Europe/Berlin"
+
+    start_timestamp = create_pendulum_time(2023, 3, 27, 1, 0, 0, tz=tz).timestamp()
+
+    cron_iter = cron_string_iterator(
+        start_timestamp + 1,
+        "0 0 29 2 *",
+        tz,
+    )
+
+    for _ in range(100):
+        next_datetime = next(cron_iter)
+        assert next_datetime.day == 29
+        assert next_datetime.year % 4 == 0
+        assert (not next_datetime.year % 100 == 0) or (next_datetime.year % 400 == 0)
+
+
 @pytest.mark.parametrize(
     "execution_timezone,cron_string,times",
     [
