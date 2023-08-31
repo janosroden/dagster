@@ -11,11 +11,11 @@ from dagster._core.external_execution.utils import ExternalExecutionBlobStoreMes
 
 
 class ExternalExecutionS3MessageReader(ExternalExecutionBlobStoreMessageReader):
-    def __init__(self, *, interval: int = 10, bucket: str):
+    def __init__(self, *, interval: int = 10, bucket: str, client: boto3.client):
         super().__init__(interval=interval)
         self.bucket = bucket
         self.key_prefix = "".join(random.choices(string.ascii_letters, k=30))
-        self.client = boto3.client("s3")
+        self.client = client
 
     def get_params(self) -> ExternalExecutionParams:
         return {"bucket": self.bucket, "key_prefix": self.key_prefix}
