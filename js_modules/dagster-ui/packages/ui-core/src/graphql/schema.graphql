@@ -727,6 +727,7 @@ enum AutoMaterializePolicyType {
 type AutoMaterializeRule {
   description: String!
   decisionType: AutoMaterializeDecisionType!
+  className: String!
 }
 
 enum AutoMaterializeDecisionType {
@@ -3130,6 +3131,7 @@ type AutoMaterializeAssetEvaluationRecord {
   rulesWithRuleEvaluations: [AutoMaterializeRuleWithRuleEvaluations!]!
   timestamp: Float!
   runIds: [String!]!
+  rules: [AutoMaterializeRule!]
 }
 
 type AutoMaterializeRuleWithRuleEvaluations {
