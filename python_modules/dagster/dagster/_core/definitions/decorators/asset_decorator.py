@@ -736,8 +736,10 @@ def multi_asset(
                     if dep.partition_mapping is not None:
                         if partition_mappings.get(dep.asset_key, None):
                             if partition_mappings[dep.asset_key] != dep.partition_mapping:
-                                raise Exception(
-                                    f"Two PartitionMappings for input {dep.asset_key} provided."
+                                raise DagsterInvalidDefinitionError(
+                                    "Two different PartitionMappings provided for upstream"
+                                    f" dependency {dep.asset_key}. Please use the same"
+                                    " PartitionMapping."
                                 )
                             # else the correct PartitionMapping for the dep is already in the dictionary
                         else:
